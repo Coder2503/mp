@@ -1,22 +1,16 @@
-clc;clear;
-m=input("Enter mass in a column matrix(a*1) : ")
-r=input("Enter the corresponding position vector(a*b) : ")
-[a,b]=size(r)
-I=zeros(a,a)
-for i=1:a
-    for j=1:i
-        if (i==j)
-            for k=1:b
-                I(i, j)=I(i, j)+0.5*m(k)*(r(k,:)*r(k,:)' -r(k, j).^2)
-            end
-        else
-            for k=1:b
-                I(i, j)=I(i, j)-m(k)*(r(k, j).*r(k,i))
-            end
-        end
-    end
+clear;
+A=input("Enter the matrix : ")
+X0=[1;1;1];
+lmb0=1;
+tol=1e-4;err=1;k=1;
+while(abs(err)>tol)
+    X=A*X0;
+    lmb=max(abs(X));
+    X0=X/lmb;
+    err=lmb-lmb0;
+    lmb0=lmb;
+    disp("iter     lambda",[k,lmb],"Eigenvector",X0/norm(X0));
+    k=k+1;
 end
-I=I+I'
-disp("Inertia tensor",I)
-[v,d]=spec(I)
-disp("Axis of rotation",v,"Moment of Inertia",d)
+[v,d]=spec(A);
+disp([v,d])
