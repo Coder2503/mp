@@ -1,5 +1,5 @@
 nmax=5
-x=poly(0,"x");h=poly(0,"h")
+x=poly(0,"x");
 H(1)=1;H(2)=2*x;
 for n=0:nmax
      if n>0&n<=nmax-1 then H(n+2)=2*x*H(n+1)-2*x*H(n) end
